@@ -29,6 +29,14 @@ import java.util.Objects;
 @Slf4j
 public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeacher> implements EduTeacherService {
 
+  /**
+   * 分页条件查询
+   *
+   * @param page
+   * @param row
+   * @param queryTeacher
+   * @return
+   */
   @Override
   public CommonResult<Map<String, Object>> listAndQueryTeacher(Integer page, Integer row, QueryTeacher queryTeacher) {
     log.info("开始查询");
@@ -42,6 +50,7 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
             queryTeacher.getLevel());
     lambdaQuery.ge(StringUtils.isNotEmpty(queryTeacher.getStartTime()), EduTeacher::getGmtCreate, queryTeacher.getStartTime());
     lambdaQuery.le(StringUtils.isNotEmpty(queryTeacher.getEndTime()), EduTeacher::getGmtCreate, queryTeacher.getEndTime());
+    lambdaQuery.orderByDesc(EduTeacher::getGmtCreate);
     //开始分页查询
     page(teacherPage, lambdaQuery);
     Map<String, Object> map = new HashMap<>();
