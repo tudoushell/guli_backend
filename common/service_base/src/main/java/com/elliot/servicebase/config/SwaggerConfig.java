@@ -14,6 +14,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
+
+  /**
+   * oss 服务接口
+   *
+   * @return
+   */
+  @Bean
+  public Docket ossApi() {
+    return new Docket(DocumentationType.SWAGGER_2).groupName("阿里OSS")
+            .genericModelSubstitutes(DeferredResult.class)
+            .useDefaultResponseMessages(false)
+            .forCodeGeneration(true)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.oss"))
+            .paths(PathSelectors.any()).build().apiInfo(oss());
+  }
+
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2).groupName("讲师管理")
@@ -21,7 +38,7 @@ public class SwaggerConfig {
             .useDefaultResponseMessages(false)
             .forCodeGeneration(true)
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.elliot"))
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.eduservice"))
             .paths(PathSelectors.any()).build().apiInfo(teacher());
   }
 
@@ -29,5 +46,8 @@ public class SwaggerConfig {
     return new ApiInfoBuilder().title("在线教育").description("服务接口").build();
   }
 
+  public ApiInfo oss() {
+    return new ApiInfoBuilder().title("在线教育").description("oss文件接口").build();
+  }
 
 }
