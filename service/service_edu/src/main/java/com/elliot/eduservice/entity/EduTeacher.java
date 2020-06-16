@@ -1,13 +1,11 @@
 package com.elliot.eduservice.entity;
 
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.util.Date;
 
 /**
  * <p>
@@ -20,12 +18,9 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "EduTeacher对象", description = "讲师")
-public class EduTeacher {
+public class EduTeacher extends BaseEntity{
 
   private static final long serialVersionUID = 1L;
-
-  @TableId(type = IdType.ASSIGN_UUID)
-  private String id;
 
   @ApiModelProperty(value = "讲师姓名")
   private String name;
@@ -48,14 +43,5 @@ public class EduTeacher {
   @TableLogic
   @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
   private Boolean isDeleted;
-
-  @TableField(value = "gmt_create", fill = FieldFill.INSERT)
-  @ApiModelProperty(value = "创建时间")
-  private Date gmtCreate;
-
-  @TableField(value = "gmt_modified", fill = FieldFill.INSERT_UPDATE)
-  @ApiModelProperty(value = "更新时间")
-  private Date gmtModified;
-
 
 }

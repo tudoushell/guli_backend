@@ -42,12 +42,11 @@ public class OssServiceImpl implements OssService {
     OSS ossClient = null;
     try {
       ossClient = new OSSClient(endpoint, keyId, keySecret);
-
       // 上传内容到指定的存储空间（bucketName）并保存为指定的文件名称（objectName）。
-      ossClient.putObject(bucketName,  FILE_NAME, multipartFile.getInputStream());
+      ossClient.putObject(bucketName, FILE_NAME, multipartFile.getInputStream());
     } catch (Exception e) {
       log.error(e.getMessage(), e);
-       return CommonResult.failed("文件上传失败");
+      return CommonResult.failed("文件上传失败");
     } finally {
       // 关闭OSSClient。
       ossClient.shutdown();
