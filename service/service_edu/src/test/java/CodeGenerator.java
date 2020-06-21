@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.elliot.eduservice.entity.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CodeGenerator {
     System.out.println(help.toString());
     if (scanner.hasNext()) {
       String ipt = scanner.next();
-      if (StringUtils.isNotEmpty(ipt)) {
+      if (StringUtils.isNotBlank(ipt)) {
         return ipt;
       }
     }
@@ -42,6 +43,7 @@ public class CodeGenerator {
     // 全局配置
     GlobalConfig gc = new GlobalConfig();
     String projectPath = System.getProperty("user.dir");
+    System.out.println("*****" + projectPath);
     gc.setOutputDir("/Users/happy/project/guli_backend/service/service_edu" + "/src/main/java");
     gc.setAuthor("elliot");
     //生成后是否打开资源管理器
@@ -88,7 +90,7 @@ public class CodeGenerator {
       @Override
       public String outputFile(TableInfo tableInfo) {
         // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-        return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
+        return projectPath + "/service/service_edu" + "/src/main/resources/mapper/" + pc.getModuleName()
                 + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
       }
     });
@@ -126,11 +128,11 @@ public class CodeGenerator {
     StrategyConfig strategy = new StrategyConfig();
     strategy.setNaming(NamingStrategy.underline_to_camel);
     strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-    strategy.setSuperEntityClass("你自己的父类实体,没有就不用设置!");
+    strategy.setSuperEntityClass(BaseEntity.class);
     strategy.setEntityLombokModel(true);
     strategy.setRestControllerStyle(true);
     // 公共父类
-    strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
+//    strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
     // 写于父类中的公共字段
     strategy.setSuperEntityColumns("id");
     strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
