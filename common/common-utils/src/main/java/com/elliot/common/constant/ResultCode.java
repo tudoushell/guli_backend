@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public enum ResultCode implements IErrorCode{
   SUCCESS(200, "操作成功"),
-  FAILED(500,"操作出错");
+  FAILED(500,"操作出错"),
+  UNAUTHORIZED(401, "没有权限");
 
   private long code;
 

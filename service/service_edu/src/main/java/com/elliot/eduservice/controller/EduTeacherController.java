@@ -22,7 +22,7 @@ import java.util.Map;
  * @since 2020-05-24
  */
 @RestController
-@RequestMapping("/api/edu-teacher")
+@RequestMapping("/api/edu-service/edu-teacher")
 @Api(tags = "讲师管理接口", consumes = "application/json")
 @CrossOrigin
 public class EduTeacherController {

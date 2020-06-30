@@ -31,6 +31,6 @@ public class EduSubject extends BaseEntity {
     private String parentId;
 
     @ApiModelProperty(value = "排序字段")
-    private Integer sort;
+    private String sort;
 
 }

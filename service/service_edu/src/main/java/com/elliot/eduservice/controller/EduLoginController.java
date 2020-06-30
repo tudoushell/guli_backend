@@ -9,9 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/edu-service/user")
 @Api(tags = "用户管理")
-//解决跨域
 @CrossOrigin
 public class EduLoginController {
 
