@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-//  @ResponseBody
-//  @ExceptionHandler(value = Exception.class)
-//  public CommonResult exception(Exception e) {
-//    return CommonResult.failed(e.getMessage());
-//  }
+  @ResponseBody
+  @ExceptionHandler(value = Exception.class)
+  public CommonResult exception(Exception e) {
+    return CommonResult.failed("server error wait please");
+  }
 
   @ResponseBody
   @ExceptionHandler(value = ApiException.class)

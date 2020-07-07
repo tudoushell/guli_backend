@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +30,13 @@ public class EduTeacherController {
 
   @Autowired
   private EduTeacherService eduTeacherService;
+
+  @ApiOperation("获取所有的讲师")
+  @GetMapping("")
+  public CommonResult listAllTeacher() {
+    List<EduTeacher> eduTeacherList = eduTeacherService.list();
+    return CommonResult.success(eduTeacherList);
+  }
 
 
   @ApiOperation("修改讲师")

@@ -73,7 +73,7 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
   public CommonResult addSubjectCategory(MultipartFile file, EduSubjectService eduSubjectService) {
     String fileName = file.getOriginalFilename();
     if (file == null) {
-      return CommonResult.failed("文件为空");
+      throw new ApiException("文件为空");
     }
     if (fileName.endsWith(".xlsx")) {
       try {
