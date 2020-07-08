@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 
 @Data
 public class CourseDto {
+
+  @ApiModelProperty(value = "课程ID")
+  private String id;
   
   @ApiModelProperty(value = "课程标题")
   private String title;

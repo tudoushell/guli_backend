@@ -15,6 +15,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduCourseService extends IService<EduCourse> {
   /**
+   * 修改课程
+   *
+   * @param courseDto
+   * @return
+   */
+  CommonResult updateCourse(CourseDto courseDto);
+
+  /**
    * 添加课程
    *
    * @param courseDto

@@ -62,6 +62,6 @@ public class EduCourse extends BaseEntity {
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
     @TableLogic
-    private Boolean isDeleted;
+    private boolean isDeleted;
 
 }

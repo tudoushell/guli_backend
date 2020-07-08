@@ -48,7 +48,7 @@ CREATE TABLE `edu_course` (
   `view_count` bigint(10) unsigned NOT NULL DEFAULT '0' COMMENT '浏览数量',
   `version` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '乐观锁',
   `status` varchar(10) NOT NULL DEFAULT 'Draft' COMMENT '课程状态 Draft未发布  Normal已发布',
-  `is_deleted` tinyint(3) DEFAULT NULL COMMENT '逻辑删除 1（true）已删除， 0（false）未删除',
+  `is_deleted` tinyint(3) NOT NULL DEFAULT 0 COMMENT '逻辑删除 1（true）已删除， 0（false）未删除',
   `gmt_create` datetime NOT NULL COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),

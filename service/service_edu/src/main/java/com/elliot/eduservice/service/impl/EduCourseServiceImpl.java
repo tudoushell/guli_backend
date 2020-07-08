@@ -1,6 +1,7 @@
 package com.elliot.eduservice.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.elliot.common.exception.ApiException;
 import com.elliot.common.result.CommonResult;
 import com.elliot.eduservice.dto.CourseDto;
 import com.elliot.eduservice.entity.EduCourse;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * <p>
@@ -29,6 +31,27 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
   @Resource
   private EduCourseDescriptionService eduCourseDescriptionService;
+
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public CommonResult updateCourse(CourseDto courseDto) {
+    EduCourse eduCourse = baseMapper.selectById(courseDto.getId());
+    EduCourseDescription eduCourseDescription = eduCourseDescriptionService.getById(eduCourse.getId());
+    if (Objects.isNull(eduCourse) || Objects.isNull(eduCourseDescription)) {
+      throw new ApiException("课程信息有误");
+    }
+    log.info("更新课程");
+    BeanUtils.copyProperties(courseDto, eduCourse);
+    boolean eduCourseSave = save(eduCourse);
+    log.info("更新课程描述");
+    eduCourseDescription.setDescription(courseDto.getDescription());
+    boolean courseDescriptionSave = eduCourseDescriptionService.save(eduCourseDescription);
+    if (eduCourseSave && courseDescriptionSave) {
+      return CommonResult.success(null);
+    } else {
+      return CommonResult.failed("更新失败!");
+    }
+  }
 
   @Transactional(rollbackFor = Exception.class)
   @Override
