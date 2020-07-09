@@ -15,6 +15,7 @@ public class MetaObjectHandler implements com.baomidou.mybatisplus.core.handlers
 
   @Override
   public void updateFill(MetaObject metaObject) {
+    metaObject.setValue("gmtModified", null);
     this.strictInsertFill(metaObject, "gmtModified", Date.class, new Date());
   }
 }

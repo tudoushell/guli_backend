@@ -42,7 +42,6 @@ public class EduCourse extends BaseEntity {
     private BigDecimal price;
 
     @ApiModelProperty(value = "总课时")
-    @Version
     private Integer lessonNum;
 
     @ApiModelProperty(value = "课程封面图片路径")
@@ -55,6 +54,7 @@ public class EduCourse extends BaseEntity {
     private Long viewCount;
 
     @ApiModelProperty(value = "乐观锁")
+    @Version
     private Long version;
 
     @ApiModelProperty(value = "课程状态 Draft未发布  Normal已发布")

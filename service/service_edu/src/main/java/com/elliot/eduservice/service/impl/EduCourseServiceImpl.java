@@ -32,6 +32,19 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
   @Resource
   private EduCourseDescriptionService eduCourseDescriptionService;
 
+  @Override
+  public CommonResult getCourse(String id) {
+    CourseDto courseDto = new CourseDto();
+    EduCourse eduCourse = baseMapper.selectById(id);
+    EduCourseDescription eduCourseDescription = eduCourseDescriptionService.getById(id);
+    if (Objects.isNull(eduCourse) && Objects.isNull(eduCourseDescription)) {
+      return CommonResult.failed("课程信息不存在");
+    }
+    BeanUtils.copyProperties(eduCourse, courseDto);
+    courseDto.setDescription(eduCourseDescription.getDescription());
+    return CommonResult.success(courseDto);
+  }
+
   @Transactional(rollbackFor = Exception.class)
   @Override
   public CommonResult updateCourse(CourseDto courseDto) {
@@ -42,10 +55,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
     log.info("更新课程");
     BeanUtils.copyProperties(courseDto, eduCourse);
-    boolean eduCourseSave = save(eduCourse);
+    boolean eduCourseSave = updateById(eduCourse);
     log.info("更新课程描述");
     eduCourseDescription.setDescription(courseDto.getDescription());
-    boolean courseDescriptionSave = eduCourseDescriptionService.save(eduCourseDescription);
+    boolean courseDescriptionSave = eduCourseDescriptionService.updateById(eduCourseDescription);
     if (eduCourseSave && courseDescriptionSave) {
       return CommonResult.success(null);
     } else {

@@ -1,5 +1,6 @@
 package com.elliot.eduservice.config;
 
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import org.mybatis.spring.annotation.MapperScan;
@@ -19,5 +20,14 @@ public class MybatisConfig {
     // 开启 count 的 join 优化,只针对部分 left join
     paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
     return paginationInterceptor;
+  }
+
+  /**
+   * 乐观锁
+   * @return
+   */
+  @Bean
+  public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+    return new OptimisticLockerInterceptor();
   }
 }
