@@ -1,7 +1,9 @@
 package com.elliot.eduservice.service;
 
-import com.elliot.eduservice.entity.EduVideo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.elliot.eduservice.entity.EduVideo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,18 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduVideoService extends IService<EduVideo> {
 
+  /**
+   * 添加小节
+   *
+   * @param eduVideo
+   */
+  void addEduVideo(EduVideo eduVideo);
+
+  /**
+   * 列出小节信息
+   *
+   * @param courseId 课程ID
+   * @return
+   */
+  List<EduVideo> listEduVideoByCourseId(String courseId);
 }

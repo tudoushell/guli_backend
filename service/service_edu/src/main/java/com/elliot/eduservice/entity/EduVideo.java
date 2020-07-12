@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 课程视频
@@ -23,12 +25,15 @@ public class EduVideo extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "课程ID不能为空")
     @ApiModelProperty(value = "课程ID")
     private String courseId;
 
+    @NotNull(message = "章节ID不能为空")
     @ApiModelProperty(value = "章节ID")
     private String chapterId;
 
+    @NotNull(message = "节点名称不能为空")
     @ApiModelProperty(value = "节点名称")
     private String title;
 

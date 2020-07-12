@@ -15,7 +15,7 @@ public class CourseDto {
   private String title;
 
   @ApiModelProperty(value = "总课时")
-  private String lessonNum;
+  private Integer lessonNum;
 
   @ApiModelProperty(value = "课程简介")
   private String description;

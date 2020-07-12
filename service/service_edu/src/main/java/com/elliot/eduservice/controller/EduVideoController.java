@@ -1,9 +1,15 @@
 package com.elliot.eduservice.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.elliot.common.result.CommonResult;
+import com.elliot.eduservice.entity.EduVideo;
+import com.elliot.eduservice.service.EduVideoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -14,7 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-07-02
  */
 @RestController
-@RequestMapping("/eduservice/edu-video")
+@RequestMapping("/api/edu-service/edu-video")
+@CrossOrigin
+@Api(tags = "课程章节小节接口")
 public class EduVideoController {
 
+  @Resource
+  private EduVideoService eduVideoService;
+
+  @ApiOperation("添加章节小节")
+  @PostMapping("")
+  public CommonResult addEduVideo(@Validated @RequestBody EduVideo eduVideo) {
+    eduVideoService.save(eduVideo);
+    return CommonResult.success(null);
+  }
 }
