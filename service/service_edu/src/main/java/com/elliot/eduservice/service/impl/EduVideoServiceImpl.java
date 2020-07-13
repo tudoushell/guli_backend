@@ -24,6 +24,14 @@ import java.util.List;
 public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> implements EduVideoService {
 
   @Override
+  public void updateEduVideo(EduVideo eduVideo) {
+    boolean isUpdate = updateById(eduVideo);
+    if (!isUpdate) {
+      throw new ApiException("更新失败");
+    }
+  }
+
+  @Override
   public void addEduVideo(EduVideo eduVideo) {
     boolean isSave = save(eduVideo);
     if (!isSave) {

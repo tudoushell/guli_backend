@@ -16,6 +16,13 @@ import java.util.List;
 public interface EduVideoService extends IService<EduVideo> {
 
   /**
+   * 更新章节小节信息
+   *
+   * @param eduVideo
+   */
+  void updateEduVideo(EduVideo eduVideo);
+
+  /**
    * 添加小节
    *
    * @param eduVideo

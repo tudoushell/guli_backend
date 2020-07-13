@@ -28,10 +28,31 @@ public class EduVideoController {
   @Resource
   private EduVideoService eduVideoService;
 
+  @ApiOperation("修改章节小节信息")
+  @PutMapping("")
+  public CommonResult updateEduVideo(@Validated @RequestBody EduVideo eduVideo) {
+    eduVideoService.updateEduVideo(eduVideo);
+    return CommonResult.success(null);
+  }
+
+  @ApiOperation("获取章节小节信息")
+  @GetMapping("/{id}")
+  public CommonResult<EduVideo> getEduVideo(@PathVariable String id) {
+    EduVideo eduVideo = eduVideoService.getById(id);
+    return CommonResult.success(eduVideo);
+  }
+
+  @ApiOperation("删除章节小节")
+  @DeleteMapping("/{id}")
+  public CommonResult deleteEduVideo(@PathVariable String id) {
+    eduVideoService.removeById(id);
+    return CommonResult.success(null);
+  }
+
   @ApiOperation("添加章节小节")
   @PostMapping("")
   public CommonResult addEduVideo(@Validated @RequestBody EduVideo eduVideo) {
-    eduVideoService.save(eduVideo);
+    eduVideoService.addEduVideo(eduVideo);
     return CommonResult.success(null);
   }
 }
