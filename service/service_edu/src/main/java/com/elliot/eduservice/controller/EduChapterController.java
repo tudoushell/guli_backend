@@ -30,6 +30,13 @@ public class EduChapterController {
   @Resource
   private EduChapterService eduChapterService;
 
+  @ApiOperation("删除章节")
+  @DeleteMapping("/{chapterId}")
+  public CommonResult deleteChapter(@PathVariable String chapterId) {
+    eduChapterService.deleteChapter(chapterId);
+    return CommonResult.success(null);
+  }
+
   @ApiOperation("列出章节和小节信息")
   @GetMapping("/{courseId}")
   public CommonResult<List<ChapterDto>> listChapter(@PathVariable String courseId) {

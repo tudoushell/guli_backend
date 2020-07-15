@@ -79,7 +79,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
   public void deleteChapter(String chapterId) {
     log.info("查寻小节");
     LambdaQueryWrapper<EduVideo> eduVideoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-    eduVideoLambdaQueryWrapper.eq(EduVideo::getCourseId, chapterId);
+    eduVideoLambdaQueryWrapper.eq(EduVideo::getChapterId, chapterId);
     Integer eduVideoCount = eduVideoService.getBaseMapper().selectCount(eduVideoLambdaQueryWrapper);
     if (eduVideoCount > 0) {
       throw new ApiException("该章节下有小节，请删除小节，再删除章节");
