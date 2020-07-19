@@ -3,7 +3,9 @@ package com.elliot.eduservice.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.elliot.common.exception.ApiException;
 import com.elliot.common.result.CommonResult;
+import com.elliot.eduservice.consts.CourseStatus;
 import com.elliot.eduservice.dto.CourseDto;
+import com.elliot.eduservice.dto.CoursePublishDto;
 import com.elliot.eduservice.entity.EduCourse;
 import com.elliot.eduservice.entity.EduCourseDescription;
 import com.elliot.eduservice.mapper.EduCourseMapper;
@@ -31,6 +33,24 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
   @Resource
   private EduCourseDescriptionService eduCourseDescriptionService;
+
+  @Resource
+  private EduCourseMapper eduCourseMapper;
+
+  @Override
+  public void publishCourse(String id) {
+    EduCourse eduCourse = getById(id);
+    if (Objects.isNull(eduCourse)) {
+      throw new ApiException("课程不存在");
+    }
+    eduCourse.setStatus(CourseStatus.Normal.name());
+    updateById(eduCourse);
+  }
+
+  @Override
+  public CoursePublishDto getPublishCourse(String id) {
+    return eduCourseMapper.getCoursePublishInfo(id);
+  }
 
   @Override
   public CommonResult getCourse(String id) {

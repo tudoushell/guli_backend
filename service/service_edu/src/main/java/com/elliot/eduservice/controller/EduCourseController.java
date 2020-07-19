@@ -27,6 +27,19 @@ public class EduCourseController {
   @Resource
   private EduCourseService eduCourseService;
 
+  @ApiOperation("发布课程")
+  @PutMapping("/publish/{id}")
+  public CommonResult publishCourse(@PathVariable String id) {
+    eduCourseService.publishCourse(id);
+    return CommonResult.success(null);
+  }
+
+  @ApiOperation("获取课程发布信息")
+  @GetMapping("/publish/{id}")
+  public CommonResult getPublishCourseInfo(@PathVariable String id) {
+    return CommonResult.success(eduCourseService.getPublishCourse(id));
+  }
+
   @ApiOperation("获取课程信息")
   @GetMapping("/{courseId}")
   public CommonResult getCourse(@PathVariable String courseId) {

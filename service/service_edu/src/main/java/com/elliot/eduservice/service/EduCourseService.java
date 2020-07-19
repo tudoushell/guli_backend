@@ -1,9 +1,10 @@
 package com.elliot.eduservice.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.elliot.common.result.CommonResult;
 import com.elliot.eduservice.dto.CourseDto;
+import com.elliot.eduservice.dto.CoursePublishDto;
 import com.elliot.eduservice.entity.EduCourse;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -14,6 +15,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-07-02
  */
 public interface EduCourseService extends IService<EduCourse> {
+
+  /**
+   * 发布课程
+   *
+   * @param id
+   */
+  void publishCourse(String id);
+
+  /**
+   * 获取课程发布的信息
+   *
+   * @param id
+   * @return
+   */
+  CoursePublishDto getPublishCourse(String id);
 
   /**
    * 获取课程信息
