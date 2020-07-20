@@ -16,6 +16,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
   /**
+   * 阿里视频上传
+   *
+   * @return
+   */
+  @Bean
+  public Docket vodApi() {
+    return new Docket(DocumentationType.SWAGGER_2).groupName("阿里VOD")
+            .genericModelSubstitutes(DeferredResult.class)
+            .useDefaultResponseMessages(false)
+            .forCodeGeneration(true)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.vod"))
+            .paths(PathSelectors.any()).build().apiInfo(vod());
+  }
+
+  /**
    * oss 服务接口
    *
    * @return
@@ -49,5 +65,10 @@ public class SwaggerConfig {
   public ApiInfo oss() {
     return new ApiInfoBuilder().title("在线教育").description("oss文件接口").build();
   }
+
+  public ApiInfo vod() {
+    return new ApiInfoBuilder().title("在线教育").description("视频上传").build();
+  }
+
 
 }

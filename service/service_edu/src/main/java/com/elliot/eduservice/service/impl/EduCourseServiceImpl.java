@@ -1,22 +1,28 @@
 package com.elliot.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.elliot.common.exception.ApiException;
 import com.elliot.common.result.CommonResult;
 import com.elliot.eduservice.consts.CourseStatus;
 import com.elliot.eduservice.dto.CourseDto;
 import com.elliot.eduservice.dto.CoursePublishDto;
+import com.elliot.eduservice.dto.CourseQueryDto;
 import com.elliot.eduservice.entity.EduCourse;
 import com.elliot.eduservice.entity.EduCourseDescription;
 import com.elliot.eduservice.mapper.EduCourseMapper;
 import com.elliot.eduservice.service.EduCourseDescriptionService;
 import com.elliot.eduservice.service.EduCourseService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -36,6 +42,36 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
   @Resource
   private EduCourseMapper eduCourseMapper;
+
+  @Override
+  public void deleteCourse(String id) {
+    //删除课程表和课程描述
+    log.info("删除课程描述");
+    eduCourseDescriptionService.deleteCourseDescription(id);
+    log.info("删除课程");
+    int isDelete = baseMapper.deleteById(id);
+    if (isDelete < 1) {
+      throw new ApiException("操作失败!");
+    }
+  }
+
+  @Override
+  public Map<String, Object> listCourseByCondition(int page, int row, CourseQueryDto courseQueryDto) {
+    Page<EduCourse> eduCoursePage = new Page<>(page, row);
+    LambdaQueryWrapper<EduCourse>  lambdaQueryWrapper = new LambdaQueryWrapper<>();
+    if (StringUtils.isNotEmpty(courseQueryDto.getTitle())) {
+      lambdaQueryWrapper.like(EduCourse::getTitle, courseQueryDto.getTitle());
+    }
+    if (StringUtils.isNotEmpty(courseQueryDto.getStatus())) {
+      lambdaQueryWrapper.eq(EduCourse::getStatus, courseQueryDto.getStatus());
+    }
+    lambdaQueryWrapper.orderByDesc(EduCourse::getGmtCreate);
+    page(eduCoursePage,lambdaQueryWrapper);
+    Map<String, Object> map = new HashMap<>();
+    map.put("total", eduCoursePage.getTotal());
+    map.put("items", eduCoursePage.getRecords());
+    return map;
+  }
 
   @Override
   public void publishCourse(String id) {
