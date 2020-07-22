@@ -22,6 +22,13 @@ public class VodController {
   @Resource
   private VodService vodService;
 
+  @ApiOperation("从阿里云删除视频")
+  @DeleteMapping("/{videoId}")
+  public CommonResult deleteVideo(@PathVariable String videoId) {
+    vodService.deleteAliVideo(videoId);
+    return CommonResult.success(null);
+  }
+
   @ApiOperation("上传视频")
   @PostMapping("")
   public CommonResult<String> uploadVideo(@RequestBody MultipartFile file) {

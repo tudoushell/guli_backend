@@ -3,6 +3,10 @@ package com.elliot.vod.service.impl;
 import com.aliyun.vod.upload.impl.UploadVideoImpl;
 import com.aliyun.vod.upload.req.UploadStreamRequest;
 import com.aliyun.vod.upload.resp.UploadStreamResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
 import com.elliot.common.exception.ApiException;
 import com.elliot.vod.service.VodService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +21,30 @@ import java.io.InputStream;
 @Slf4j
 public class VodServiceImpl implements VodService {
 
+  @Value("${aliyun.vod.regionId}")
+  private String regionId;
+
   @Value("${aliyun.vod.accessKeyId}")
   private String accessKeyId;
 
   @Value("${aliyun.vod.accessKeySecret}")
   private String accessKeySecret;
+
+  @Override
+  public void deleteAliVideo(String videoId) {
+    DefaultAcsClient client = initVodClient(accessKeyId, accessKeySecret);
+    DeleteVideoResponse response = new DeleteVideoResponse();
+    DeleteVideoRequest request = new DeleteVideoRequest();
+    request.setVideoIds(videoId);
+    try {
+      response = client.getAcsResponse(request);
+    } catch (Exception e) {
+      e.printStackTrace();
+      log.error(e.getMessage(), e);
+      throw new ApiException("删除视频失败！");
+    }
+    log.info("删除成功" + response.getRequestId());
+  }
 
   @Override
   public String uploadVideo(MultipartFile file) {
@@ -49,5 +72,11 @@ public class VodServiceImpl implements VodService {
         throw new ApiException("视频文件异常");
       }
     }
+  }
+
+  private DefaultAcsClient initVodClient(String accessKeyId, String accessKeySecret) {
+    DefaultProfile profile = DefaultProfile.getProfile(regionId, accessKeyId, accessKeySecret);
+    DefaultAcsClient client = new DefaultAcsClient(profile);
+    return client;
   }
 }
