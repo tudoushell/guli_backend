@@ -45,7 +45,7 @@ public class EduVideoController {
   @ApiOperation("删除章节小节")
   @DeleteMapping("/{id}")
   public CommonResult deleteEduVideo(@PathVariable String id) {
-    eduVideoService.removeById(id);
+    eduVideoService.deleteEduVideo(id);
     return CommonResult.success(null);
   }
 

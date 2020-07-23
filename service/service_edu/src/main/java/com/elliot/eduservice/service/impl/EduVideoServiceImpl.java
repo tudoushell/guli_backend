@@ -6,9 +6,12 @@ import com.elliot.common.exception.ApiException;
 import com.elliot.eduservice.entity.EduVideo;
 import com.elliot.eduservice.mapper.EduVideoMapper;
 import com.elliot.eduservice.service.EduVideoService;
+import com.elliot.eduservice.service.EduVodService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,6 +25,22 @@ import java.util.List;
 @Service
 @Slf4j
 public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> implements EduVideoService {
+
+  @Resource
+  private EduVodService eduVodService;
+
+  @Override
+  public void deleteEduVideo(String id) {
+    //这需用到分布式事务
+    //再删除小节时，同时要删除阿里服务器上的视频
+    EduVideo eduVideo = getById(id);
+    log.info("删除阿里视频");
+    if (StringUtils.isNotEmpty(eduVideo.getVideoSourceId())) {
+      eduVodService.deleteVideo(eduVideo.getVideoSourceId());
+    }
+    log.info("删除小节");
+    baseMapper.deleteById(id);
+  }
 
   @Override
   public void updateEduVideo(EduVideo eduVideo) {
