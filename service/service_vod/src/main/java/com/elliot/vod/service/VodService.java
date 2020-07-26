@@ -2,7 +2,16 @@ package com.elliot.vod.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface VodService {
+
+  /**
+   * 批量删除阿里视频
+   *
+   * @param videoIdList
+   */
+  void deleteBatchVideo(List<String> videoIdList);
 
   /**
    * 从阿里中删除视频

@@ -10,12 +10,14 @@ import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
 import com.elliot.common.exception.ApiException;
 import com.elliot.vod.service.VodService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -29,6 +31,24 @@ public class VodServiceImpl implements VodService {
 
   @Value("${aliyun.vod.accessKeySecret}")
   private String accessKeySecret;
+
+  @Override
+  public void deleteBatchVideo(List<String> videoIdList) {
+    DefaultAcsClient client = initVodClient(accessKeyId, accessKeySecret);
+    DeleteVideoResponse response = new DeleteVideoResponse();
+    DeleteVideoRequest request = new DeleteVideoRequest();
+    String videoIds = StringUtils.join(videoIdList.toArray(),
+            ",");
+    request.setVideoIds(videoIds);
+    try {
+      response = client.getAcsResponse(request);
+    } catch (Exception e) {
+      e.printStackTrace();
+      log.error(e.getMessage(), e);
+      throw new ApiException("删除视频失败！");
+    }
+    log.info("删除成功" + response.getRequestId());
+  }
 
   @Override
   public void deleteAliVideo(String videoId) {

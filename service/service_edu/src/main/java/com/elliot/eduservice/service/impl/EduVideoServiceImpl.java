@@ -3,6 +3,7 @@ package com.elliot.eduservice.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.elliot.common.exception.ApiException;
+import com.elliot.common.result.CommonResult;
 import com.elliot.eduservice.entity.EduVideo;
 import com.elliot.eduservice.mapper.EduVideoMapper;
 import com.elliot.eduservice.service.EduVideoService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -28,6 +30,27 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
 
   @Resource
   private EduVodService eduVodService;
+
+  @Override
+  public void deleteEduVideoByCourseId(String courseId) {
+    //删除小节，同时删除视频
+    LambdaQueryWrapper<EduVideo> eduVideoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+    eduVideoLambdaQueryWrapper.eq(EduVideo::getCourseId, courseId);
+    List<EduVideo> eduVideoList = baseMapper.selectList(eduVideoLambdaQueryWrapper);
+    //获取小节中的视频
+    List<String> videoIdList = eduVideoList.stream()
+            .map(EduVideo::getVideoSourceId)
+            .collect(Collectors.toList());
+    log.info("批量删除阿里云视频");
+    if (!videoIdList.isEmpty()) {
+      CommonResult commonResult = eduVodService.deleteBatchVideo(videoIdList);
+      if (commonResult.getCode() != 200) {
+        throw new ApiException("删除视频出错");
+      }
+    }
+    log.info("删除小节");
+    baseMapper.delete(eduVideoLambdaQueryWrapper);
+  }
 
   @Override
   public void deleteEduVideo(String id) {

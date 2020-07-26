@@ -16,6 +16,13 @@ import java.util.List;
 public interface EduVideoService extends IService<EduVideo> {
 
   /**
+   * 根据课程ID 删除小节和阿里视频
+   *
+   * @param courseId
+   */
+  void deleteEduVideoByCourseId(String courseId);
+
+  /**
    * 删除章节小节信息
    *
    * @param id

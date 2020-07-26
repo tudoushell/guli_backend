@@ -3,6 +3,7 @@ package com.elliot.eduservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 会进行包扫描，扫描该启动类包以下，子包中所有带
  * @FeignClient 注解的类（包括启动类所在包），并进行处理。
  */
+@EnableHystrix
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication

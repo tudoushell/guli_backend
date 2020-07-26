@@ -14,6 +14,7 @@ import com.elliot.eduservice.entity.EduCourseDescription;
 import com.elliot.eduservice.mapper.EduCourseMapper;
 import com.elliot.eduservice.service.EduCourseDescriptionService;
 import com.elliot.eduservice.service.EduCourseService;
+import com.elliot.eduservice.service.EduVideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -43,11 +44,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
   @Resource
   private EduCourseMapper eduCourseMapper;
 
+  @Resource
+  private EduVideoService eduVideoService;
+
+  @Transactional(rollbackFor = Exception.class)
   @Override
   public void deleteCourse(String id) {
-    //删除课程表和课程描述
+    //删除课程表、课程描述、课程小节
     log.info("删除课程描述");
     eduCourseDescriptionService.deleteCourseDescription(id);
+    log.info("删除小节");
+    eduVideoService.deleteEduVideoByCourseId(id);
     log.info("删除课程");
     int isDelete = baseMapper.deleteById(id);
     if (isDelete < 1) {
@@ -58,7 +65,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
   @Override
   public Map<String, Object> listCourseByCondition(int page, int row, CourseQueryDto courseQueryDto) {
     Page<EduCourse> eduCoursePage = new Page<>(page, row);
-    LambdaQueryWrapper<EduCourse>  lambdaQueryWrapper = new LambdaQueryWrapper<>();
+    LambdaQueryWrapper<EduCourse> lambdaQueryWrapper = new LambdaQueryWrapper<>();
     if (StringUtils.isNotEmpty(courseQueryDto.getTitle())) {
       lambdaQueryWrapper.like(EduCourse::getTitle, courseQueryDto.getTitle());
     }
@@ -66,7 +73,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
       lambdaQueryWrapper.eq(EduCourse::getStatus, courseQueryDto.getStatus());
     }
     lambdaQueryWrapper.orderByDesc(EduCourse::getGmtCreate);
-    page(eduCoursePage,lambdaQueryWrapper);
+    page(eduCoursePage, lambdaQueryWrapper);
     Map<String, Object> map = new HashMap<>();
     map.put("total", eduCoursePage.getTotal());
     map.put("items", eduCoursePage.getRecords());
