@@ -16,6 +16,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
   /**
+   * PC端API
+   *
+   * @return
+   */
+  @Bean
+  public Docket banner() {
+    return new Docket(DocumentationType.SWAGGER_2).groupName("cms相关")
+            .genericModelSubstitutes(DeferredResult.class)
+            .useDefaultResponseMessages(false)
+            .forCodeGeneration(true)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.cmsservice"))
+            .paths(PathSelectors.any()).build().apiInfo(cms());
+  }
+
+
+  /**
    * 阿里视频上传
    *
    * @return
@@ -69,6 +86,11 @@ public class SwaggerConfig {
   public ApiInfo vod() {
     return new ApiInfoBuilder().title("在线教育").description("视频上传").build();
   }
+
+  public ApiInfo cms() {
+    return new ApiInfoBuilder().title("在线教育").description("PC端").build();
+  }
+
 
 
 }

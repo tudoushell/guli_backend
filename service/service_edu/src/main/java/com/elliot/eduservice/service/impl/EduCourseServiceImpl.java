@@ -66,11 +66,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
   public Map<String, Object> listCourseByCondition(int page, int row, CourseQueryDto courseQueryDto) {
     Page<EduCourse> eduCoursePage = new Page<>(page, row);
     LambdaQueryWrapper<EduCourse> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-    if (StringUtils.isNotEmpty(courseQueryDto.getTitle())) {
-      lambdaQueryWrapper.like(EduCourse::getTitle, courseQueryDto.getTitle());
-    }
-    if (StringUtils.isNotEmpty(courseQueryDto.getStatus())) {
-      lambdaQueryWrapper.eq(EduCourse::getStatus, courseQueryDto.getStatus());
+    if (Objects.nonNull(courseQueryDto)) {
+      if (StringUtils.isNotEmpty(courseQueryDto.getTitle())) {
+        lambdaQueryWrapper.like(EduCourse::getTitle, courseQueryDto.getTitle());
+      }
+      if (StringUtils.isNotEmpty(courseQueryDto.getStatus())) {
+        lambdaQueryWrapper.eq(EduCourse::getStatus, courseQueryDto.getStatus());
+      }
     }
     lambdaQueryWrapper.orderByDesc(EduCourse::getGmtCreate);
     page(eduCoursePage, lambdaQueryWrapper);
