@@ -15,6 +15,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerConfig {
 
+
+  /**
+   * PC端API
+   *
+   * @return
+   */
+  @Bean
+  public Docket serviceMsm() {
+    return new Docket(DocumentationType.SWAGGER_2).groupName("阿里云短信")
+            .genericModelSubstitutes(DeferredResult.class)
+            .useDefaultResponseMessages(false)
+            .forCodeGeneration(true)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.edumsm"))
+            .paths(PathSelectors.any()).build().apiInfo(msm());
+  }
+
+
   /**
    * PC端API
    *
@@ -91,6 +109,9 @@ public class SwaggerConfig {
     return new ApiInfoBuilder().title("在线教育").description("PC端").build();
   }
 
+  public ApiInfo msm() {
+    return new ApiInfoBuilder().title("在线教育").description("阿里短信服务").build();
+  }
 
 
 }

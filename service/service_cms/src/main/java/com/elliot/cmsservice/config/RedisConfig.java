@@ -3,6 +3,7 @@ package com.elliot.cmsservice.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ public class RedisConfig {
     Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
     ObjectMapper om = new ObjectMapper();
     om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-    om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+    om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
     jackson2JsonRedisSerializer.setObjectMapper(om);
     template.setConnectionFactory(factory);
     //key序列化方式
@@ -48,7 +49,7 @@ public class RedisConfig {
     //解决查询缓存转换异常的问题
     ObjectMapper om = new ObjectMapper();
     om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-    om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+    om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
     jackson2JsonRedisSerializer.setObjectMapper(om);
     // 配置序列化（解决乱码的问题）,过期时间600秒
     RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
