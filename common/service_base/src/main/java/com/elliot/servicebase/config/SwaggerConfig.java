@@ -15,9 +15,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerConfig {
 
-
   /**
    * PC端API
+   *
+   * @return
+   */
+  @Bean
+  public Docket serviceUcenter() {
+    return new Docket(DocumentationType.SWAGGER_2).groupName("用户")
+            .genericModelSubstitutes(DeferredResult.class)
+            .useDefaultResponseMessages(false)
+            .forCodeGeneration(true)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.ucenter"))
+            .paths(PathSelectors.any()).build().apiInfo(uCenter());
+  }
+
+
+  /**
+   * 阿里云短信
    *
    * @return
    */
@@ -113,5 +129,8 @@ public class SwaggerConfig {
     return new ApiInfoBuilder().title("在线教育").description("阿里短信服务").build();
   }
 
+  public ApiInfo uCenter() {
+    return new ApiInfoBuilder().title("在线教育").description("用户中心").build();
+  }
 
 }
