@@ -1,5 +1,7 @@
 package com.elliot.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.elliot.common.dto.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -10,21 +12,34 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class JwtUtil {
-  //常量
-  public static final long EXPIRE = 1000 * 60 * 60 * 24; //token过期时间
-  public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO"; //秘钥
+  /**
+   * token过期时间
+   */
+  public static final long EXPIRE = 1000 * 60 * 60 * 24;
 
-  //生成token字符串的方法
+  /**
+   * 秘钥
+   */
+  public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO";
+
+  /**
+   * 生成token字符串的方法
+   *
+   * @param id
+   * @param nickname
+   * @return
+   */
   public static String getJwtToken(String id, String nickname) {
-
+    User user = new User();
+    user.setId(id);
+    user.setNickname(nickname);
     String JwtToken = Jwts.builder()
             .setHeaderParam("typ", "JWT")
             .setHeaderParam("alg", "HS256")
-            .setSubject("guli-user")
+            .setSubject("userInfo")
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
-            .claim("id", id)  //设置token主体部分 ，存储用户信息
-            .claim("nickname", nickname)
+            .claim("user", JSON.toJSONString(user))
             .signWith(SignatureAlgorithm.HS256, APP_SECRET)
             .compact();
     return JwtToken;
