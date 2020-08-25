@@ -29,10 +29,11 @@ public class JwtUtil {
    * @param nickname
    * @return
    */
-  public static String getJwtToken(String id, String nickname) {
+  public static String getJwtToken(String id, String nickname, String avatar) {
     User user = new User();
     user.setId(id);
     user.setNickname(nickname);
+    user.setAvatar(avatar);
     String JwtToken = Jwts.builder()
             .setHeaderParam("typ", "JWT")
             .setHeaderParam("alg", "HS256")
@@ -91,10 +92,10 @@ public class JwtUtil {
   public static String getMemberIdByJwtToken(HttpServletRequest request) {
     String jwtToken = request.getHeader("token");
     if (StringUtils.isEmpty(jwtToken)) {
-      return "";
+      return null;
     }
     Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
     Claims claims = claimsJws.getBody();
-    return (String) claims.get("id");
+    return (String) claims.get("user");
   }
 }

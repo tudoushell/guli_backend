@@ -13,4 +13,7 @@ public class User {
   
   @ApiModelProperty(value = "昵称")
   private String nickname;
+
+  @ApiModelProperty(value = "头像")
+  private String avatar;
 }

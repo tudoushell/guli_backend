@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ResultCode implements IErrorCode{
   SUCCESS(200, "操作成功"),
   FAILED(500,"操作出错"),
-  UNAUTHORIZED(401, "没有权限");
+  UNAUTHORIZED(401, "token过期"),
+  PASSWORDERROR(400, "帐号或密码错误");
 
   private long code;
 

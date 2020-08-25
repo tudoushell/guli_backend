@@ -1,9 +1,12 @@
 package com.elliot.ucenter.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.elliot.ucenter.dto.LoginDto;
 import com.elliot.ucenter.dto.MemberDto;
+import com.elliot.ucenter.dto.UserDto;
 import com.elliot.ucenter.entity.Member;
-import com.baomidou.mybatisplus.extension.service.IService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -14,6 +17,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-08-17
  */
 public interface MemberService extends IService<Member> {
+
+  /**
+   * 获取用户信息
+   *
+   * @param request
+   * @return
+   */
+  UserDto getUserInfo(HttpServletRequest request);
 
   /**
    * 用户注册

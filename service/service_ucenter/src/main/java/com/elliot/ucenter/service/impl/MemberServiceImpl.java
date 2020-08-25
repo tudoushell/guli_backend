@@ -1,19 +1,24 @@
 package com.elliot.ucenter.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.elliot.common.constant.ResultCode;
 import com.elliot.common.exception.ApiException;
 import com.elliot.common.utils.JwtUtil;
 import com.elliot.ucenter.dto.LoginDto;
 import com.elliot.ucenter.dto.MemberDto;
+import com.elliot.ucenter.dto.UserDto;
 import com.elliot.ucenter.entity.Member;
 import com.elliot.ucenter.mapper.MemberMapper;
 import com.elliot.ucenter.service.MemberService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**
@@ -29,6 +34,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
   @Resource
   private RedisTemplate<String, String> restTemplate;
+
+  @Override
+  public UserDto getUserInfo(HttpServletRequest request) {
+    String memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(request);
+    return JSON.parseObject(memberIdByJwtToken, UserDto.class);
+  }
 
   @Override
   public void register(MemberDto memberDto) {
@@ -49,18 +60,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
   @Override
   public String login(LoginDto loginDto) {
+    final String PASSWORD = DigestUtils.md5DigestAsHex(loginDto.getPassword().getBytes());
     LambdaQueryWrapper<Member> lambdaQueryWrapper = new LambdaQueryWrapper<>();
     lambdaQueryWrapper.eq(Member::getMobile, loginDto.getMobile());
     Member member = baseMapper.selectOne(lambdaQueryWrapper);
     if (Objects.isNull(member)) {
-      throw new ApiException("帐号或密码错误");
+      throw new ApiException(ResultCode.PASSWORDERROR);
     }
-    if (!member.getPassword().equals(loginDto.getPassword())) {
-      throw new ApiException("帐号或密码错误");
+    if (!member.getPassword().equals(PASSWORD)) {
+      throw new ApiException(ResultCode.PASSWORDERROR);
     }
     if (member.getIsDisabled() && member.getIsDisabled()) {
       throw new ApiException("帐号已停用");
     }
-    return JwtUtil.getJwtToken(member.getId(), member.getNickname());
+    return JwtUtil.getJwtToken(member.getId(), member.getNickname(), member.getAvatar());
   }
 }
