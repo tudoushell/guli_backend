@@ -1,5 +1,5 @@
 server:
-  port: 8006
+  port: 8150
 
 spring:
   application:
@@ -30,6 +30,15 @@ spring:
         max-wait: -1
         max-idle: 5
         min-idle: 0
+wx:
+  open:
+    # 微信开放平台appId
+    appId: wxed9954c01bb89b47
+    # 微信开放平台 appsecret
+    appSecret: a7482517235173ddb4083788de60b90e
+    # 微信开放平台 重定向url
+    redirectUrl: http://guli.shop/api/ucenter/wx/callback
+    
 #mybatis 日志
 mybatis-plus:
   configuration:

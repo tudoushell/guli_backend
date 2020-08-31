@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2020-08-17
  */
 @RestController
-@RequestMapping("/api/u-center")
+@RequestMapping("/api/ucenter")
 @CrossOrigin
 @Api(tags = "用户接口")
 public class MemberController {
