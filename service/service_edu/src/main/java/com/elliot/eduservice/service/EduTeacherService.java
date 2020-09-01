@@ -16,6 +16,15 @@ import java.util.Map;
  * @since 2020-05-24
  */
 public interface EduTeacherService extends IService<EduTeacher> {
-  public CommonResult<Map<String, Object>> listAndQueryTeacher(Integer page, Integer row, QueryTeacher queryTeacher);
+
+  /**
+   * 获取老师详情信息及课程信息
+   *
+   * @param id
+   * @return
+   */
+  Map<String, Object> getTeacherDetail(String id);
+
+  CommonResult<Map<String, Object>> listAndQueryTeacher(Integer page, Integer row, QueryTeacher queryTeacher);
 
 }

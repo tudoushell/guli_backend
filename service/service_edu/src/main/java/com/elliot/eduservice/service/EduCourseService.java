@@ -7,6 +7,7 @@ import com.elliot.eduservice.dto.CoursePublishDto;
 import com.elliot.eduservice.dto.CourseQueryDto;
 import com.elliot.eduservice.entity.EduCourse;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +19,14 @@ import java.util.Map;
  * @since 2020-07-02
  */
 public interface EduCourseService extends IService<EduCourse> {
+
+  /**
+   * 根据teacherId列出课程
+   *
+   * @param teacherId
+   * @return
+   */
+  List<CourseDto> listCourseByTeacherId(String teacherId);
 
   /**
    * 课程删除

@@ -22,9 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * <p>
@@ -46,6 +44,20 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
   @Resource
   private EduVideoService eduVideoService;
+
+  @Override
+  public List<CourseDto> listCourseByTeacherId(String teacherId) {
+    List<CourseDto> courseDtoList = new ArrayList<>();
+    LambdaQueryWrapper<EduCourse> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+    lambdaQueryWrapper.eq(EduCourse::getTeacherId, teacherId);
+    List<EduCourse> eduCourseList = baseMapper.selectList(lambdaQueryWrapper);
+    eduCourseList.forEach(eduCourse -> {
+      CourseDto courseDto = new CourseDto();
+      BeanUtils.copyProperties(eduCourse, courseDto);
+      courseDtoList.add(courseDto);
+    });
+    return courseDtoList;
+  }
 
   @Transactional(rollbackFor = Exception.class)
   @Override

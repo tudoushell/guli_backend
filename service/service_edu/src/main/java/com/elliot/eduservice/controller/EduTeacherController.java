@@ -31,6 +31,11 @@ public class EduTeacherController {
   @Autowired
   private EduTeacherService eduTeacherService;
 
+  @GetMapping("/detail/{id}")
+  public CommonResult<Map<String, Object>> getTeacherAndCourse(@PathVariable String id) {
+    return CommonResult.success(eduTeacherService.getTeacherDetail(id));
+  }
+
   @ApiOperation("获取所有的讲师")
   @GetMapping("")
   public CommonResult listAllTeacher() {
@@ -69,7 +74,7 @@ public class EduTeacherController {
 
   @ApiOperation("分页查询讲师")
   @PostMapping("/{page}/{row}")
-  public CommonResult<Map<String, Object>> listTeacher(@PathVariable("page") Integer page, @PathVariable("row") Integer row, @RequestBody QueryTeacher queryTeacher) {
+  public CommonResult<Map<String, Object>> listTeacher(@PathVariable("page") Integer page, @PathVariable("row") Integer row, @RequestBody(required = false) QueryTeacher queryTeacher) {
     return eduTeacherService.listAndQueryTeacher(page, row, queryTeacher);
   }
 
