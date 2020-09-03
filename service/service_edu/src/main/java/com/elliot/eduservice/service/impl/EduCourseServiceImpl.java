@@ -85,12 +85,34 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
       if (StringUtils.isNotEmpty(courseQueryDto.getStatus())) {
         lambdaQueryWrapper.eq(EduCourse::getStatus, courseQueryDto.getStatus());
       }
+      if (StringUtils.isNotEmpty(courseQueryDto.getSubjectParentId())) {
+        lambdaQueryWrapper.eq(EduCourse::getSubjectParentId, courseQueryDto.getSubjectParentId());
+      }
+      if (StringUtils.isNotEmpty(courseQueryDto.getSubjectId())) {
+        lambdaQueryWrapper.eq(EduCourse::getSubjectId, courseQueryDto.getSubjectId());
+      }
+      //最新课程排序
+      if (courseQueryDto.isOrderByGmtCreate()) {
+        lambdaQueryWrapper.orderByDesc(EduCourse::getGmtCreate);
+      }
+      //价格排序
+      if (courseQueryDto.isOrderByPrice()) {
+        lambdaQueryWrapper.orderByDesc(EduCourse::getPrice);
+      }
+      //关注度
+      if (courseQueryDto.isOrderByViewCount()) {
+        lambdaQueryWrapper.orderByDesc(EduCourse::getViewCount);
+      }
     }
     lambdaQueryWrapper.orderByDesc(EduCourse::getGmtCreate);
     page(eduCoursePage, lambdaQueryWrapper);
     Map<String, Object> map = new HashMap<>();
     map.put("total", eduCoursePage.getTotal());
     map.put("items", eduCoursePage.getRecords());
+    //c端需要的数据
+    map.put("hasPrevious", eduCoursePage.hasPrevious());
+    map.put("current", eduCoursePage.getCurrent());
+    map.put("hasNext", eduCoursePage.hasNext());
     return map;
   }
 
