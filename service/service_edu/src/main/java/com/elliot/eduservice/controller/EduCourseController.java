@@ -2,6 +2,7 @@ package com.elliot.eduservice.controller;
 
 
 import com.elliot.common.result.CommonResult;
+import com.elliot.eduservice.dto.CourseDetailDto;
 import com.elliot.eduservice.dto.CourseDto;
 import com.elliot.eduservice.dto.CourseQueryDto;
 import com.elliot.eduservice.service.EduCourseService;
@@ -28,6 +29,12 @@ public class EduCourseController {
 
   @Resource
   private EduCourseService eduCourseService;
+
+  @ApiOperation("c端获取课程详情")
+  @GetMapping("/detail/{id}")
+  public CommonResult<CourseDetailDto> getCourseDetailInfo(@PathVariable String id) {
+    return CommonResult.success(eduCourseService.getClientCourseInfo(id));
+  }
 
   @ApiOperation("删除课程")
   @DeleteMapping("/{id}")

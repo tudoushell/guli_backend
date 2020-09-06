@@ -6,12 +6,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.elliot.common.exception.ApiException;
 import com.elliot.common.result.CommonResult;
 import com.elliot.eduservice.consts.CourseStatus;
-import com.elliot.eduservice.dto.CourseDto;
-import com.elliot.eduservice.dto.CoursePublishDto;
-import com.elliot.eduservice.dto.CourseQueryDto;
+import com.elliot.eduservice.dto.*;
 import com.elliot.eduservice.entity.EduCourse;
 import com.elliot.eduservice.entity.EduCourseDescription;
 import com.elliot.eduservice.mapper.EduCourseMapper;
+import com.elliot.eduservice.service.EduChapterService;
 import com.elliot.eduservice.service.EduCourseDescriptionService;
 import com.elliot.eduservice.service.EduCourseService;
 import com.elliot.eduservice.service.EduVideoService;
@@ -44,6 +43,19 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
   @Resource
   private EduVideoService eduVideoService;
+
+  @Resource
+  private EduChapterService eduChapterService;
+
+  @Override
+  public CourseDetailDto getClientCourseInfo(String id) {
+    List<ChapterDto> chapterDtoList = eduChapterService.listChapter(id);
+    EduCourseDescription description = eduCourseDescriptionService.getById(id);
+    CourseDetailDto courseInfo = baseMapper.getCourseInfo(id);
+    courseInfo.setChapterDtoList(chapterDtoList);
+    courseInfo.setDescription(description.getDescription());
+    return courseInfo;
+  }
 
   @Override
   public List<CourseDto> listCourseByTeacherId(String teacherId) {

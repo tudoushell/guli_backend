@@ -57,6 +57,8 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
                 ChapterSectionDto chapterSectionDto = new ChapterSectionDto();
                 chapterSectionDto.setId(eduVideo.getId());
                 chapterSectionDto.setTitle(eduVideo.getTitle());
+                chapterSectionDto.setVideoSourceId(eduVideo.getVideoSourceId());
+                chapterSectionDto.setIsFree(eduVideo.getIsFree());
                 chapterSectionDtoList.add(chapterSectionDto);
               });
       chapterDto.setChildren(chapterSectionDtoList);

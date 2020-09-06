@@ -7,6 +7,13 @@ import java.util.List;
 public interface VodService {
 
   /**
+   * 获取阿里云视频播放凭证
+   *
+   * @return
+   */
+  String getPlayAuth(String videoId);
+
+  /**
    * 批量删除阿里视频
    *
    * @param videoIdList

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.elliot.eduservice.mapper.EduCourseMapper">
+
+    <resultMap id="courseDetail" type="com.elliot.eduservice.dto.CourseDetailDto">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="buyCount" column="buy_count"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="cover" column="cover"/>
+        <result property="lessonNum" column="lesson_num"/>
+        <result property="mainSubject" column="main_subject"/>
+        <result property="subSubject" column="sub_subject"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="price" column="price"/>
+        <result property="teacherAvatar" column="teacher_avatar"/>
+        <result property="teacherIntro" column="teacher_intro"/>
+    </resultMap>
+
     <resultMap id="coursePublishInfo" type="com.elliot.eduservice.dto.CoursePublishDto">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
@@ -11,6 +27,30 @@
         <result property="teacherName" column="teacher_name"/>
         <result property="price" column="price"/>
     </resultMap>
+
+    <select id="getCourseInfo" resultMap="courseDetail">
+        SELECT
+            ec.id,
+            ec.buy_count,
+            ec.view_count,
+            ec.title,
+            ec.cover,
+            ec.lesson_num,
+            ec.price,
+            et.NAME AS teacher_name,
+            et.avatar as teacher_avatar,
+	        et.intro as teacher_intro,
+            es.title AS main_subject,
+            es2.title AS sub_subject
+        FROM
+            edu_course ec
+            LEFT JOIN edu_teacher et ON ec.teacher_id = et.id
+            LEFT JOIN edu_subject es ON ec.subject_id = es.id
+            LEFT JOIN edu_subject es2 ON ec.subject_parent_id = es2.id
+        WHERE
+            ec.id = #{courseId}
+    </select>
+
     <select id="getCoursePublishInfo" resultMap="coursePublishInfo">
          SELECT
             ec.id,

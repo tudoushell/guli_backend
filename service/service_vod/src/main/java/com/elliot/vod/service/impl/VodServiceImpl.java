@@ -7,6 +7,8 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.elliot.common.exception.ApiException;
 import com.elliot.vod.service.VodService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,21 @@ public class VodServiceImpl implements VodService {
 
   @Value("${aliyun.vod.accessKeySecret}")
   private String accessKeySecret;
+
+  @Override
+  public String getPlayAuth(String videoId) {
+    DefaultAcsClient client = initVodClient(accessKeyId, accessKeySecret);
+    GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+    GetVideoPlayAuthResponse response = null;
+    request.setVideoId(videoId);
+    try {
+      response = client.getAcsResponse(request);
+      return response.getPlayAuth();
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      throw new ApiException("视频有误");
+    }
+  }
 
   @Override
   public void deleteBatchVideo(List<String> videoIdList) {

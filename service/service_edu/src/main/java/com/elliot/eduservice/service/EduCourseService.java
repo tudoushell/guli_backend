@@ -2,6 +2,7 @@ package com.elliot.eduservice.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.elliot.common.result.CommonResult;
+import com.elliot.eduservice.dto.CourseDetailDto;
 import com.elliot.eduservice.dto.CourseDto;
 import com.elliot.eduservice.dto.CoursePublishDto;
 import com.elliot.eduservice.dto.CourseQueryDto;
@@ -19,6 +20,15 @@ import java.util.Map;
  * @since 2020-07-02
  */
 public interface EduCourseService extends IService<EduCourse> {
+
+  /**
+   * 获取C端课程详情
+   *
+   * @param id
+   * @return
+   */
+  CourseDetailDto getClientCourseInfo(String id);
+
 
   /**
    * 根据teacherId列出课程
