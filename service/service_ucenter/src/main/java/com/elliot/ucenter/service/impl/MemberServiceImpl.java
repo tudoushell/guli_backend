@@ -36,6 +36,16 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
   private RedisTemplate<String, String> restTemplate;
 
   @Override
+  public UserDto getUserById(String id) {
+    Member member = baseMapper.selectById(id);
+    UserDto userDto = new UserDto();
+    if (Objects.nonNull(member)) {
+      BeanUtils.copyProperties(member, userDto);
+    }
+    return userDto;
+  }
+
+  @Override
   public UserDto getUserInfo(HttpServletRequest request) {
     String memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(request);
     return JSON.parseObject(memberIdByJwtToken, UserDto.class);

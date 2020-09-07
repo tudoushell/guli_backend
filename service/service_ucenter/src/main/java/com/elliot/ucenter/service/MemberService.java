@@ -19,6 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 public interface MemberService extends IService<Member> {
 
   /**
+   * 根据ID获取用户信息
+   *
+   * @param id 用户ID
+   * @return
+   */
+  UserDto getUserById(String id);
+
+  /**
    * 获取用户信息
    *
    * @param request

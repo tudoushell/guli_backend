@@ -31,6 +31,12 @@ public class MemberController {
   @Resource
   private MemberService memberService;
 
+  @ApiOperation("根据id获取用户信息")
+  @GetMapping("/user/{id}")
+  public UserDto getUserById(@PathVariable String id) {
+    return memberService.getUserById(id);
+  }
+
   @ApiOperation("获取用户信息")
   @GetMapping("/info")
   public CommonResult<UserDto> getUserInfo(HttpServletRequest request) {

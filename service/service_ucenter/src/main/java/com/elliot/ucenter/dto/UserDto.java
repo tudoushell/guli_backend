@@ -10,4 +10,6 @@ public class UserDto {
   private String nickname;
 
   private String avatar;
+
+  private String mobile;
 }
