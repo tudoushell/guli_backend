@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Setter
 @Getter
 public class OrderCourseDto {
@@ -30,5 +32,5 @@ public class OrderCourseDto {
   private String teacherName;
 
   @ApiModelProperty(value = "课程价格")
-  private String price;
+  private BigDecimal price;
 }

@@ -3,6 +3,8 @@ package com.elliot.eduservice.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class CoursePublishDto {
 
@@ -28,5 +30,5 @@ public class CoursePublishDto {
   private String teacherName;
 
   @ApiModelProperty(value = "课程价格")
-  private String price;
+  private BigDecimal price;
 }

@@ -14,6 +14,15 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface OrderService extends IService<Order> {
 
   /**
+   * 根据订单编号获取信息
+   *
+   * @param orderNo
+   * @return
+   */
+  Order getOrderByOrderNo(String orderNo);
+
+
+  /**
    * 生成一个订单
    *
    * @param courseId 课程id

@@ -4,6 +4,7 @@ package com.elliot.eduservice.controller;
 import com.elliot.common.result.CommonResult;
 import com.elliot.eduservice.dto.CourseDetailDto;
 import com.elliot.eduservice.dto.CourseDto;
+import com.elliot.eduservice.dto.CoursePublishDto;
 import com.elliot.eduservice.dto.CourseQueryDto;
 import com.elliot.eduservice.service.EduCourseService;
 import io.swagger.annotations.Api;
@@ -29,6 +30,12 @@ public class EduCourseController {
 
   @Resource
   private EduCourseService eduCourseService;
+
+  @ApiOperation("用于远程调用获取课程信息")
+  @GetMapping("/course/{id}")
+  public CoursePublishDto getCourseById(@PathVariable String id) {
+    return eduCourseService.getPublishCourse(id);
+  }
 
   @ApiOperation("c端获取课程详情")
   @GetMapping("/detail/{id}")
