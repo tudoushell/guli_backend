@@ -25,7 +25,7 @@ import java.util.Objects;
 public class WxServiceImpl extends ServiceImpl<MemberMapper, Member> implements WxService {
 
   @Resource
-  private RestTemplate restTemplate = new RestTemplate();
+  private RestTemplate restTemplate;
 
   @Override
   @Transactional(rollbackFor = Exception.class)

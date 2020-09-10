@@ -122,11 +122,11 @@ CREATE TABLE `ucenter_member` (
 CREATE TABLE `t_order` (
   `id` varchar(32) NOT NULL DEFAULT '',
   `order_no` varchar(20) NOT NULL DEFAULT '' COMMENT '订单号',
-  `course_id` varchar(19) NOT NULL DEFAULT '' COMMENT '课程id',
+  `course_id` varchar(32) NOT NULL DEFAULT '' COMMENT '课程id',
   `course_title` varchar(100) DEFAULT NULL COMMENT '课程名称',
   `course_cover` varchar(255) DEFAULT NULL COMMENT '课程封面',
   `teacher_name` varchar(20) DEFAULT NULL COMMENT '讲师名称',
-  `member_id` varchar(19) NOT NULL DEFAULT '' COMMENT '会员id',
+  `member_id` varchar(32) NOT NULL DEFAULT '' COMMENT '会员id',
   `nickname` varchar(50) DEFAULT NULL COMMENT '会员昵称',
   `mobile` varchar(11) DEFAULT NULL COMMENT '会员手机',
   `total_fee` decimal(10,2) DEFAULT '0.01' COMMENT '订单金额（分）',

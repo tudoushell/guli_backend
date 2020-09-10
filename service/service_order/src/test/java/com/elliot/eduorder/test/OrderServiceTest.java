@@ -2,6 +2,7 @@ package com.elliot.eduorder.test;
 
 import com.elliot.eduorder.OrderApplication;
 import com.elliot.eduorder.service.OrderService;
+import com.elliot.eduorder.service.PayLogService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,14 @@ import javax.annotation.Resource;
 public class OrderServiceTest {
   @Resource
   private OrderService orderService;
+
+  @Resource
+  private PayLogService payLogService;
+
+  @Test
+  public void test2() {
+    payLogService.createNative("20200909221607195");
+  }
 
   @Test
   public void test() {

@@ -13,8 +13,8 @@
 
     <dependencies>
         <dependency>
-            <groupId></groupId>
-            <artifactId></artifactId>
+            <groupId>com.wxpay</groupId>
+            <artifactId>sdk</artifactId>
         </dependency>
     </dependencies>
 
