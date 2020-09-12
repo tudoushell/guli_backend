@@ -16,6 +16,24 @@ import java.util.Map;
 public interface PayLogService extends IService<PayLog> {
 
   /**
+   * 订单支付成功后保存支付日志
+   *
+   * @param orderNo
+   * @return
+   */
+  Map<String, String> orderSuccessToSaveLog(String orderNo);
+
+
+  /**
+   * 获取微信交易状态
+   *
+   * @param orderNo
+   * @return
+   */
+  Map<String, String> getOrderStatus(String orderNo);
+
+
+  /**
    * 获取微信支付二维码
    *
    * @param orderNo

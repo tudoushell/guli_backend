@@ -21,7 +21,7 @@ public class OrderServiceTest {
 
   @Test
   public void test2() {
-    payLogService.createNative("20200909221607195");
+    payLogService.getOrderStatus("20200909221607195");
   }
 
   @Test

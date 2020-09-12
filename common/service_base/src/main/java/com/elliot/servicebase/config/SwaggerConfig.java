@@ -21,6 +21,22 @@ public class SwaggerConfig {
    * @return
    */
   @Bean
+  public Docket serviceOrder() {
+    return new Docket(DocumentationType.SWAGGER_2).groupName("用户订单相关")
+            .genericModelSubstitutes(DeferredResult.class)
+            .useDefaultResponseMessages(false)
+            .forCodeGeneration(true)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.eduorder"))
+            .paths(PathSelectors.any()).build().apiInfo(order());
+  }
+
+  /**
+   * PC端API
+   *
+   * @return
+   */
+  @Bean
   public Docket serviceUcenter() {
     return new Docket(DocumentationType.SWAGGER_2).groupName("用户")
             .genericModelSubstitutes(DeferredResult.class)
@@ -132,5 +148,10 @@ public class SwaggerConfig {
   public ApiInfo uCenter() {
     return new ApiInfoBuilder().title("在线教育").description("用户中心").build();
   }
+
+  public ApiInfo order() {
+    return new ApiInfoBuilder().title("在线教育").description("用户订单").build();
+  }
+
 
 }

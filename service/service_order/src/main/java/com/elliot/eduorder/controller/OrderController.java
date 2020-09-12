@@ -7,6 +7,7 @@ import com.elliot.common.utils.JwtUtil;
 import com.elliot.eduorder.dto.OrderUserDto;
 import com.elliot.eduorder.entity.Order;
 import com.elliot.eduorder.service.OrderService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/api/edu-order/order")
+@Api(tags = "用户订单接口")
 @CrossOrigin
 public class OrderController {
 

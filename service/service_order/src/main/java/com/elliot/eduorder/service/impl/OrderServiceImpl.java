@@ -39,6 +39,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
   @Resource
   private EduService eduService;
 
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public void updateOrderStatusByOrderNo(String orderNo, OrderPayStatus orderPayStatus) {
+    Order orderByOrderNo = getOrderByOrderNo(orderNo);
+    orderByOrderNo.setStatus(orderPayStatus.getPayStatus());
+    this.updateById(orderByOrderNo);
+  }
+
   @Override
   public Order getOrderByOrderNo(String orderNo) {
     LambdaQueryWrapper<Order> lambdaQueryWrapper = new LambdaQueryWrapper<>();

@@ -1,7 +1,8 @@
 package com.elliot.eduorder.service;
 
-import com.elliot.eduorder.entity.Order;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.elliot.eduorder.consts.OrderPayStatus;
+import com.elliot.eduorder.entity.Order;
 
 /**
  * <p>
@@ -12,6 +13,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-09-07
  */
 public interface OrderService extends IService<Order> {
+
+  /**
+   * 修改订单支付状态
+   *
+   * @param orderNo
+   * @param orderPayStatus
+   */
+  void updateOrderStatusByOrderNo(String orderNo, OrderPayStatus orderPayStatus);
 
   /**
    * 根据订单编号获取信息
