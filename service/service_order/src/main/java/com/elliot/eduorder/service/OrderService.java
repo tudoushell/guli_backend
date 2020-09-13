@@ -15,6 +15,15 @@ import com.elliot.eduorder.entity.Order;
 public interface OrderService extends IService<Order> {
 
   /**
+   * 判断当前用户是否已支付该课程
+   *
+   * @param courseId
+   * @param memberId
+   * @return
+   */
+  boolean orderIsPaidByCourseIdAndMemberId(String courseId, String memberId);
+
+  /**
    * 修改订单支付状态
    *
    * @param orderNo

@@ -150,6 +150,7 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
       resultMap.put("out_trade_no", orderNo);
       resultMap.put("total_fee", orderByOrderNo.getTotalFee());
       resultMap.put("result_code", responseMap.get("result_code"));
+      resultMap.put("courseId", orderByOrderNo.getCourseId());
       //二维码链接
       resultMap.put("code_url", responseMap.get("code_url"));
       return resultMap;

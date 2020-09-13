@@ -31,6 +31,12 @@ public class OrderController {
   @Resource
   private OrderService orderService;
 
+  @ApiOperation("获取用户是否已支付课程")
+  @GetMapping("/course/{courseId}")
+  public Boolean orderIsPaid(@PathVariable String courseId, @RequestParam String userId) {
+    return orderService.orderIsPaidByCourseIdAndMemberId(courseId, userId);
+  }
+
   @ApiOperation("获取订单详情")
   @GetMapping("/{orderNo}")
   public CommonResult<Order> getOrderByOrderNo(@PathVariable String orderNo) {

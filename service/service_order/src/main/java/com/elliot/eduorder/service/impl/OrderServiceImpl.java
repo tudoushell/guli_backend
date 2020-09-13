@@ -39,6 +39,18 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
   @Resource
   private EduService eduService;
 
+  @Override
+  public boolean orderIsPaidByCourseIdAndMemberId(String courseId, String memberId) {
+    LambdaQueryWrapper<Order> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+    lambdaQueryWrapper.eq(Order::getCourseId, courseId);
+    lambdaQueryWrapper.eq(Order::getMemberId, memberId);
+    Order order = this.baseMapper.selectOne(lambdaQueryWrapper);
+    if (Objects.nonNull(order)) {
+      return true;
+    }
+    return false;
+  }
+
   @Transactional(rollbackFor = Exception.class)
   @Override
   public void updateOrderStatusByOrderNo(String orderNo, OrderPayStatus orderPayStatus) {

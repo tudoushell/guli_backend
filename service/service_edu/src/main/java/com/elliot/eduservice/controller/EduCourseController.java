@@ -1,17 +1,17 @@
 package com.elliot.eduservice.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.elliot.common.result.CommonResult;
-import com.elliot.eduservice.dto.CourseDetailDto;
-import com.elliot.eduservice.dto.CourseDto;
-import com.elliot.eduservice.dto.CoursePublishDto;
-import com.elliot.eduservice.dto.CourseQueryDto;
+import com.elliot.common.utils.JwtUtil;
+import com.elliot.eduservice.dto.*;
 import com.elliot.eduservice.service.EduCourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -39,8 +39,10 @@ public class EduCourseController {
 
   @ApiOperation("c端获取课程详情")
   @GetMapping("/detail/{id}")
-  public CommonResult<CourseDetailDto> getCourseDetailInfo(@PathVariable String id) {
-    return CommonResult.success(eduCourseService.getClientCourseInfo(id));
+  public CommonResult<CourseDetailDto> getCourseDetailInfo(@PathVariable String id, HttpServletRequest request) {
+    String memberIdByJwtToken = JwtUtil.getMemberIdByJwtToken(request);
+    UserDto userDto = JSON.parseObject(memberIdByJwtToken, UserDto.class);
+    return CommonResult.success(eduCourseService.getClientCourseInfo(id, userDto.getId()));
   }
 
   @ApiOperation("删除课程")

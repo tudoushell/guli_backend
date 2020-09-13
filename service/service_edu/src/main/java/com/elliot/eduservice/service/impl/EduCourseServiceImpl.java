@@ -10,10 +10,7 @@ import com.elliot.eduservice.dto.*;
 import com.elliot.eduservice.entity.EduCourse;
 import com.elliot.eduservice.entity.EduCourseDescription;
 import com.elliot.eduservice.mapper.EduCourseMapper;
-import com.elliot.eduservice.service.EduChapterService;
-import com.elliot.eduservice.service.EduCourseDescriptionService;
-import com.elliot.eduservice.service.EduCourseService;
-import com.elliot.eduservice.service.EduVideoService;
+import com.elliot.eduservice.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -47,13 +44,18 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
   @Resource
   private EduChapterService eduChapterService;
 
+  @Resource
+  private EduOrderService eduOrderService;
+
   @Override
-  public CourseDetailDto getClientCourseInfo(String id) {
+  public CourseDetailDto getClientCourseInfo(String id, String userId) {
     List<ChapterDto> chapterDtoList = eduChapterService.listChapter(id);
     EduCourseDescription description = eduCourseDescriptionService.getById(id);
     CourseDetailDto courseInfo = baseMapper.getCourseInfo(id);
     courseInfo.setChapterDtoList(chapterDtoList);
     courseInfo.setDescription(description.getDescription());
+    boolean isPaid = eduOrderService.courseIsPaidByMemberId(id, userId);
+    courseInfo.setBuy(isPaid);
     return courseInfo;
   }
 

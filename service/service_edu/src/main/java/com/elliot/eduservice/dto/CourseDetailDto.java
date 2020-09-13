@@ -49,6 +49,9 @@ public class CourseDetailDto {
   @ApiModelProperty(value = "浏览数量")
   private Long viewCount;
 
+  @ApiModelProperty(value = "当前课程是否已购买")
+  private boolean isBuy;
+
   @ApiModelProperty(value = "章节和视频")
   private List<ChapterDto> chapterDtoList;
 }

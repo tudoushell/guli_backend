@@ -25,9 +25,10 @@ public interface EduCourseService extends IService<EduCourse> {
    * 获取C端课程详情
    *
    * @param id
+   * @param userId
    * @return
    */
-  CourseDetailDto getClientCourseInfo(String id);
+  CourseDetailDto getClientCourseInfo(String id, String userId);
 
 
   /**
@@ -48,9 +49,9 @@ public interface EduCourseService extends IService<EduCourse> {
   /**
    * 分布列出课程信息
    *
-   * @param page 当前第几页
-   * @param row 每页显示个数
-   * @param courseQueryDto  查询条件
+   * @param page           当前第几页
+   * @param row            每页显示个数
+   * @param courseQueryDto 查询条件
    * @return
    */
   Map<String, Object> listCourseByCondition(int page, int row, CourseQueryDto courseQueryDto);
