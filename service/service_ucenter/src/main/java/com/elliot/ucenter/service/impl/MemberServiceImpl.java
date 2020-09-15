@@ -36,6 +36,11 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
   private RedisTemplate<String, String> restTemplate;
 
   @Override
+  public long countRegisterUsers(String dateStr) {
+    return baseMapper.countRegisterUserByToday(dateStr);
+  }
+
+  @Override
   public UserDto getUserById(String id) {
     Member member = baseMapper.selectById(id);
     UserDto userDto = new UserDto();

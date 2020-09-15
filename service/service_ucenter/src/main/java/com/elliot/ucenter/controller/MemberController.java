@@ -31,6 +31,12 @@ public class MemberController {
   @Resource
   private MemberService memberService;
 
+  @ApiOperation("获取某个时间(yyyy-MM-dd)的注册人数")
+  @GetMapping("/register/count")
+  public CommonResult<Long> getCountRegisterUser(@RequestParam String dateStr) {
+    return CommonResult.success(memberService.countRegisterUsers(dateStr));
+  }
+
   @ApiOperation("根据id获取用户信息")
   @GetMapping("/user/{id}")
   public UserDto getUserById(@PathVariable String id) {

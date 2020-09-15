@@ -19,6 +19,15 @@ import javax.servlet.http.HttpServletRequest;
 public interface MemberService extends IService<Member> {
 
   /**
+   * 统计当天注册的人数
+   *
+   * @param dateStr
+   * @return
+   */
+  long countRegisterUsers(String dateStr);
+
+
+  /**
    * 根据ID获取用户信息
    *
    * @param id 用户ID
