@@ -2,6 +2,7 @@ package com.elliot.edustatistic.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.elliot.common.result.CommonResult;
+import com.elliot.edustatistic.dto.StatisticDto;
 import com.elliot.edustatistic.entity.StatisticsDaily;
 import com.elliot.edustatistic.mapper.StatisticsDailyMapper;
 import com.elliot.edustatistic.service.StatisticsDailyService;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Random;
+import java.util.*;
 
 /**
  * <p>
@@ -28,6 +29,41 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
 
   @Resource
   private UcenterService ucenterService;
+
+  @Override
+  public Map<String, Object> statisticData(StatisticDto statisticDto) {
+    LambdaQueryWrapper<StatisticsDaily> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+    lambdaQueryWrapper.between(
+            StatisticsDaily::getDateCalculated,
+            statisticDto.getStartTime(),
+            statisticDto.getEndTime()
+    );
+    List<StatisticsDaily> statisticsDailies = baseMapper.selectList(lambdaQueryWrapper);
+    List<String> dateList = new ArrayList<>();
+    List<Object> numList = new ArrayList<>();
+    statisticsDailies.forEach(statisticsDaily -> {
+      dateList.add(statisticsDaily.getDateCalculated());
+      switch (statisticDto.getType()) {
+        case login_num:
+          numList.add(statisticsDaily.getLoginNum());
+          break;
+        case course_num:
+          numList.add(statisticsDaily.getCourseNum());
+          break;
+        case register_num:
+          numList.add(statisticsDaily.getRegisterNum());
+          break;
+        case video_view_num:
+          numList.add(statisticsDaily.getVideoViewNum());
+          break;
+        default:
+      }
+    });
+    Map<String, Object> data = new HashMap<>();
+    data.put("dateList", dateList);
+    data.put("dataList", numList);
+    return data;
+  }
 
   @Override
   public Long getRegisterNum(String dateStr) {

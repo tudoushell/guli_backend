@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Slf4j
 @Component
-public class StatisticUserCount {
+public class StatisticUserJob {
 
   @Resource
   private StatisticsDailyService statisticsDailyService;
@@ -18,7 +18,7 @@ public class StatisticUserCount {
   /**
    * 每日0点执行一次
    */
-  @Scheduled(cron = "0 0 0 * * ? *")
+  @Scheduled(cron = "0 0 0 * * ?")
   public void registerUserToSave() {
     log.info("开始执行定时任务------> 统计用户");
     LocalDate now = LocalDate.now();
