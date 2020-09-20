@@ -19,7 +19,7 @@ import java.util.List;
  * @author elliot
  * @since 2020-07-30
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/cms-service/crm-banner")
 @Api(tags = "banner接口")

@@ -16,7 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/vod")
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "阿里云vod服务")
 public class VodController {
 

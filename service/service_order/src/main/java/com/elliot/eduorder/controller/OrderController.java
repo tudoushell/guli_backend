@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/edu-order/order")
 @Api(tags = "用户订单接口")
-@CrossOrigin
+//@CrossOrigin
 public class OrderController {
 
   @Resource

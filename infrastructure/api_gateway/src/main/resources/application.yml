@@ -1,0 +1,51 @@
+server:
+  port: 8008
+spring:
+  application:
+    name: service-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: on
+      routes:
+        - id: service-edu
+          uri: lb://service-edu
+          predicates:
+            - Path=/api/edu-service/**
+        - id: service-cms
+          uri: lb://service-cms
+          predicates:
+            - Path=/api/cms-service/**
+        - id: service-oss
+          uri: lb://service-oss
+          predicates:
+            - Path=/api/oss/**
+        - id: service-msm
+          uri: lb://service-msm
+          predicates:
+            - Path=/api/edu-msm/**
+        - id: service-ucenter
+          uri: lb://service-ucenter
+          predicates:
+            - Path=/api/ucenter/**
+        - id: service-vod
+          uri: lb://service-vod
+          predicates:
+            - Path=/api/vod/**
+        - id: service-order
+          uri: lb://service-order
+          predicates:
+            - Path=/api/edu-order/**
+        - id: service-statistic
+          uri: lb://service-statistic
+          predicates:
+            - Path=/api/edu-statistic/**
+
+
+

@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api/edu-service/edu-video")
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "课程章节小节接口")
 public class EduVideoController {
 

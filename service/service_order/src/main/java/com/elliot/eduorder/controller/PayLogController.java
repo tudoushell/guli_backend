@@ -21,7 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/edu-order/pay-log")
 @Api(tags = "订单支付接口")
-@CrossOrigin
+//@CrossOrigin
 public class PayLogController {
 
   @Resource

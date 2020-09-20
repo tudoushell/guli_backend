@@ -25,7 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/edu-service/edu-teacher")
 @Api(tags = "讲师管理接口", consumes = "application/json")
-@CrossOrigin
+//@CrossOrigin
 public class EduTeacherController {
 
   @Autowired

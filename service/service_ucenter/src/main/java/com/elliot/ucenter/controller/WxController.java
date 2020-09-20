@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 
 @Slf4j
 @Controller
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/api/ucenter/wx")
 @Api(tags = "微信接口")
 public class WxController {

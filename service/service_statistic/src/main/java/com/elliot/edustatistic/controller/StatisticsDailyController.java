@@ -19,7 +19,7 @@ import java.util.Map;
  * @author elliot
  * @since 2020-09-15
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/edu-statistic/statistics-daily")
 @Api(tags = "网站统计接口")

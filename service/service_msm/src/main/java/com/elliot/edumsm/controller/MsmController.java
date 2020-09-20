@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/api/edu-msm")
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "阿里云短信接口")
 public class MsmController {
 

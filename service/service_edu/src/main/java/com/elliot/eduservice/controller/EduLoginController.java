@@ -11,7 +11,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/edu-service/user")
 @Api(tags = "用户管理")
-@CrossOrigin
+//@CrossOrigin
 public class EduLoginController {
 
   @ApiOperation("用户登录")

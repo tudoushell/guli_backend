@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/edu-service/edu-subject")
 @Api(tags = "课程分类接口", consumes = "application/json")
-@CrossOrigin
+//@CrossOrigin
 public class EduSubjectController {
 
   @Resource

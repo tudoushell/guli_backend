@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/api/ucenter")
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "用户接口")
 public class MemberController {
 

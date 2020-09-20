@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/oss")
-@CrossOrigin
+//@CrossOrigin
 @Api(tags = "阿里云oss服务")
 public class OssController {
   
