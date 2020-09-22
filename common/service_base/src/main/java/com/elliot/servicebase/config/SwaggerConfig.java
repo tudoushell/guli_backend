@@ -21,6 +21,22 @@ public class SwaggerConfig {
    * @return
    */
   @Bean
+  public Docket serviceACL() {
+    return new Docket(DocumentationType.SWAGGER_2).groupName("权限相关")
+            .genericModelSubstitutes(DeferredResult.class)
+            .useDefaultResponseMessages(false)
+            .forCodeGeneration(true)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.elliot.acl"))
+            .paths(PathSelectors.any()).build().apiInfo(acl());
+  }
+
+  /**
+   * PC端API
+   *
+   * @return
+   */
+  @Bean
   public Docket serviceOrder() {
     return new Docket(DocumentationType.SWAGGER_2).groupName("用户订单相关")
             .genericModelSubstitutes(DeferredResult.class)
@@ -151,6 +167,10 @@ public class SwaggerConfig {
 
   public ApiInfo order() {
     return new ApiInfoBuilder().title("在线教育").description("用户订单").build();
+  }
+
+  public ApiInfo acl() {
+    return new ApiInfoBuilder().title("在线教育").description("权限管理").build();
   }
 
 

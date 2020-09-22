@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  *
@@ -24,6 +26,7 @@ public class Role extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull(message = "角色名不能为空")
   @ApiModelProperty(value = "角色名称")
   private String roleName;
 
