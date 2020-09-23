@@ -22,7 +22,7 @@ public class PermissionServiceTest {
 
   @Test
   public void test() {
-    permissionService.listPermissionByRoleId("1");
+    permissionService.deletePermission("56794f8b4af25b3040e704d0af26d406");
   }
 
 }

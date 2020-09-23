@@ -16,6 +16,12 @@ import java.util.List;
  */
 public interface PermissionService extends IService<Permission> {
 
+  /**
+   * 获取所有菜单
+   *
+   * @return
+   */
+  List<PermissionDto> listAllPermission();
 
   /**
    * 根据角色获取菜单
@@ -41,7 +47,7 @@ public interface PermissionService extends IService<Permission> {
   void updatePermission(Permission permission);
 
   /**
-   * 删除权限
+   * 递归删除权限
    *
    * @param id
    */
