@@ -1,9 +1,11 @@
 package com.elliot.acl.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.elliot.acl.entity.User;
 import com.elliot.acl.mapper.UserMapper;
 import com.elliot.acl.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.elliot.common.exception.ApiException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -17,6 +19,14 @@ import org.springframework.util.DigestUtils;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+  @Override
+  public User getUserByUsername(String username) {
+    LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
+    userLambdaQueryWrapper.eq(User::getUsername, username);
+    User user = baseMapper.selectOne(userLambdaQueryWrapper);
+    return user;
+  }
 
   @Override
   public User getUserById(String id) {

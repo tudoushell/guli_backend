@@ -13,6 +13,8 @@ import lombok.Setter;
 @ApiModel(description = "用户实体类")
 public class User {
 
+  private String id;
+
   private String username;
 
   private String password;

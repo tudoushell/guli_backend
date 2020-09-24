@@ -1,9 +1,7 @@
 package com.elliot.security.security;
 
 import com.elliot.common.result.CommonResult;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import com.elliot.security.util.ResponseUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -14,12 +12,13 @@ import java.io.IOException;
 
 import static com.elliot.common.constant.ResultCode.UNAUTHORIZED;
 
+/**
+ * 未授权访问
+ *
+ */
 public class UnauthorizedEntryPoint implements AuthenticationEntryPoint {
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-    response.setStatus(HttpStatus.OK.value());
-    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.writeValue(response.getWriter(), CommonResult.failed(UNAUTHORIZED));
+    ResponseUtil.out(response, CommonResult.failed(UNAUTHORIZED));
   }
 }
