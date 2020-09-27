@@ -2,10 +2,7 @@ package com.elliot.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.elliot.common.dto.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,6 +92,22 @@ public class JwtUtil {
       return null;
     }
     Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
+    Claims claims = claimsJws.getBody();
+    return (String) claims.get("user");
+  }
+
+  /**
+   * 根据token字符串获取会员id
+   *
+   * @return
+   */
+  public static String getUserByToken(String token) throws Exception {
+    Jws<Claims> claimsJws = null;
+    try {
+      claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token);
+    } catch (ExpiredJwtException |UnsupportedJwtException |MalformedJwtException |SignatureException |IllegalArgumentException e) {
+      throw new Exception(e.getMessage());
+    }
     Claims claims = claimsJws.getBody();
     return (String) claims.get("user");
   }

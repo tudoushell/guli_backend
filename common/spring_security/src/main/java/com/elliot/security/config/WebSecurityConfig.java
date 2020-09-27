@@ -1,7 +1,7 @@
 package com.elliot.security.config;
 
-import com.elliot.common.exception.ApiException;
 import com.elliot.security.filter.LoginFilter;
+import com.elliot.security.filter.TokenAuthenticationFilter;
 import com.elliot.security.security.PasswordEncodeMatch;
 import com.elliot.security.security.UnauthorizedEntryPoint;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,7 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.exceptionHandling()
             .authenticationEntryPoint(new UnauthorizedEntryPoint())
             .and().csrf().disable().authorizeRequests().anyRequest().authenticated()
-            .and().addFilter(new LoginFilter(authenticationManager())).httpBasic();
+            .and().addFilter(new LoginFilter(authenticationManager()))
+            .addFilter(new TokenAuthenticationFilter(authenticationManager())).httpBasic();
   }
 
   /**
@@ -42,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    */
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-      auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncodeMatch);
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncodeMatch);
   }
 
   /**
@@ -53,6 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    */
   @Override
   public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers( "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**","/doc.html/**");
+    web.ignoring().antMatchers(
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/v2/**",
+            "/swagger-ui.html/**",
+            "/doc.html/**");
   }
 }
